@@ -1,7 +1,10 @@
 package com.mygdx.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -129,7 +132,12 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	            }
 	        }
 	        
-	        ball.checkCollision(pad);
+	        try {
+				ball.checkCollision(pad);
+			} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        ball.draw(shape);
 	        
 	        shape.end();

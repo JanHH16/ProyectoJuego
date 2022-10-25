@@ -2,6 +2,11 @@ package com.mygdx.game;
 
 
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -53,10 +58,14 @@ public class PingBall {
 	        }
 	    }
 	    
-	    public void checkCollision(Paddle paddle) {
+	    public void checkCollision(Paddle paddle) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 	        if(collidesWith(paddle)){
 	            color = Color.GREEN;
 	            ySpeed = -ySpeed;
+	            SonidoPaleta a = new SonidoPaleta();
+	            a.fijarSonido();
+	          
+	            a.suenatabla();
 	        }
 	        else{
 	            color = Color.WHITE;
