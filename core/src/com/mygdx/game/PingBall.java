@@ -78,12 +78,16 @@ public class PingBall {
 	    	return intersectaX && intersectaY;
 	    }
 	    
-	    public void checkCollision(Ladrillo block) {
+	    public void checkCollision(Ladrillo block) throws UnsupportedAudioFileException, LineUnavailableException {
 	        if(collidesWith(block)){
 	            ySpeed = - ySpeed;
 	            block.setVida(block.getVida()-1);
 	            
 	            if (block.getVida()==0) {
+	            	
+	            	SonidoLadrillo b = new SonidoLadrillo();
+	            	b.fijarSonido();
+	            	b.suenaladrillo();
 	            	
 	            	block.destroyed = true;
 	            }

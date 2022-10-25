@@ -120,7 +120,12 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        //dibujar bloques
 	        for (Ladrillo b : blocks) {        	
 	            b.draw(shape);
-	            ball.checkCollision(b);
+	            try {
+					ball.checkCollision(b);
+				} catch (UnsupportedAudioFileException | LineUnavailableException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 	        }
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
