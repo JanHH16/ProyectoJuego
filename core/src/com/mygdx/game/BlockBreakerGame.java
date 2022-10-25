@@ -20,7 +20,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private ShapeRenderer shape;
 	private PingBall ball;
 	private Paddle pad;
-	private ArrayList<Block> blocks = new ArrayList<>();
+	private ArrayList<Ladrillo> blocks = new ArrayList<Ladrillo>();
 	private int vidas;
 	private int puntaje;
 	private int nivel;
@@ -49,7 +49,24 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    for (int cont = 0; cont<filas; cont++ ) {
 		    	y -= blockHeight+10;
 		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
-		            blocks.add(new Block(x, y, blockWidth, blockHeight));
+		    		
+		    		if (nivel==1) {
+		    			blocks.add(new LadrilloNormal(x, y, blockWidth, blockHeight));
+		    		}
+		    		
+		    		if (nivel==2) {
+		    			
+		    			if(cont%2 == 0) {
+		    				
+		    				blocks.add(new LadrilloDuro(x,y,blockWidth,blockHeight));
+		    			}else {
+		    				
+		    				blocks.add(new LadrilloNormal(x, y, blockWidth, blockHeight));
+		    			}
+		    			
+		    		}
+		    		
+		            
 		        }
 		    }
 		}
@@ -64,7 +81,10 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			font.draw(batch, "Vidas : " + vidas, Gdx.graphics.getWidth()-20, 25);
 			batch.end();
 		}	
-		
+		public PingBall crearpelota() {
+			PingBall pelota = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true); 
+			return pelota;
+		}
 		@Override
 		public void render () {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
@@ -79,29 +99,29 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        if (ball.getY()<0) {
 	        	vidas--;
 	        	//nivel = 1;
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
+	        	ball = crearpelota();
 	        }
 	        // verificar game over
 	        if (vidas<=0) {
 	        	vidas = 3;
 	        	nivel = 1;
 	        	crearBloques(2+nivel);
-	        	//ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);	        	
+	        		        	
 	        }
 	        // verificar si el nivel se terminó
 	        if (blocks.size()==0) {
 	        	nivel++;
 	        	crearBloques(2+nivel);
-	        	ball = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true);
+	        	ball = crearpelota();
 	        }    	
 	        //dibujar bloques
-	        for (Block b : blocks) {        	
+	        for (Ladrillo b : blocks) {        	
 	            b.draw(shape);
 	            ball.checkCollision(b);
 	        }
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
-	            Block b = blocks.get(i);
+	            Ladrillo b = blocks.get(i);
 	            if (b.destroyed) {
 	            	puntaje++;
 	                blocks.remove(b);
