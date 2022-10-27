@@ -45,6 +45,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    puntaje = 0;    
 		}
 		public void crearBloques(int filas) {
+			
+			
 			blocks.clear();
 			int blockWidth = 70;
 		    int blockHeight = 26;
@@ -93,31 +95,22 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
 	        shape.begin(ShapeRenderer.ShapeType.Filled);
 	        pad.draw(shape);
-	        // monitorear inicio del juego
-	        if (ball.estaQuieto()) {
-	        	ball.setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
-	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ball.setEstaQuieto(false);
-	        }else ball.update();
-	        //verificar si se fue la bola x abajo
-	        if (ball.getY()<0) {
-	        	vidas--;
-	        	//nivel = 1;
-	        	ball = crearpelota();
-	        }
-	        // verificar game over
-	        if (vidas<=0) {
-	        	vidas = 3;
-	        	nivel = 1;
-	        	crearBloques(2+nivel);
-	        		        	
-	        }
-	        // verificar si el nivel se terminó
-	        if (blocks.size()==0) {
-	        	nivel++;
-	        	crearBloques(2+nivel);
-	        	ball = crearpelota();
-	        }    	
-	        //dibujar bloques
+	      
+	        condiciones();
+	        
+	        bloquesUpdate();
+	        
+	        
+	        dibujaTextos();
+		}
+		
+		@Override
+		public void dispose () {
+
+		}
+		public void bloquesUpdate() {
+			
+			//dibujar bloques
 	        for (Ladrillo b : blocks) {        	
 	            b.draw(shape);
 	            try {
@@ -146,11 +139,34 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        ball.draw(shape);
 	        
 	        shape.end();
-	        dibujaTextos();
-		}
-		
-		@Override
-		public void dispose () {
+			
+		} 
+		public void condiciones(){
 
-		}
+			  // monitorear inicio del juego
+		        if (ball.estaQuieto()) {
+		        	ball.setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
+		        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ball.setEstaQuieto(false);
+		        }else ball.update();
+		        //verificar si se fue la bola x abajo
+		        if (ball.getY()<0) {
+		        	vidas--;
+		        	//nivel = 1;
+		        	ball = crearpelota();
+		        }
+		        // verificar game over
+		        if (vidas<=0) {
+		        	vidas = 3;
+		        	nivel = 1;
+		        	crearBloques(2+nivel);
+		        		        	
+		        }
+		        // verificar si el nivel se terminó
+		        if (blocks.size()==0) {
+		        	nivel++;
+		        	crearBloques(2+nivel);
+		        	ball = crearpelota();
+		        }
+			 
+		 }
 	}
