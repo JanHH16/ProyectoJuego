@@ -65,7 +65,7 @@ public class PingBall {
 	            SonidoPaleta a = new SonidoPaleta();
 	            a.fijarSonido();
 	          
-	            a.suenatabla();
+	            a.suenaladrillo();;
 	        }
 	        else{
 	            color = Color.WHITE;

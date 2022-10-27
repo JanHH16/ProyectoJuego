@@ -26,11 +26,6 @@ public class SonidoLadrillo implements Sonido  {
 		clip.start();
 	}
 
-	@Override
-	public void suenatabla() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void fijarSonido() throws UnsupportedAudioFileException, LineUnavailableException {

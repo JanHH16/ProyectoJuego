@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import java.io.IOException;
+
 import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
@@ -20,14 +20,10 @@ public class SonidoPaleta implements Sonido {
 		
 	}
 
-	@Override
-	public void suenaladrillo() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
-	public void suenatabla() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public void suenaladrillo() {
 		// TODO Auto-generated method stub
 		clip.start();
 		
