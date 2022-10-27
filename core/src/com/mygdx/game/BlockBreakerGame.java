@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.sound.sampled.LineUnavailableException;
@@ -11,7 +10,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
@@ -25,29 +26,49 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private Paddle pad;
 	private ArrayList<Ladrillo> blocks = new ArrayList<Ladrillo>();
 	private Jugador jugador = new Jugador(3,0,1);
+<<<<<<< HEAD
 //	private int vidas;
 //	private int puntaje;
 //	private int nivel;
+=======
+	private Texture img;
+	
+>>>>>>> f094e5f94d969ac6319a53802453df45221a4db5
     
 		@Override
 		public void create () {	
 			camera = new OrthographicCamera();
 		    camera.setToOrtho(false, 800, 480);
 		    batch = new SpriteBatch();
+		    img = new Texture("descarga.png"); 
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
+<<<<<<< HEAD
 		 //  nivel = 1;
 		    crearBloques(2+jugador.getNivel());
+=======
+		    
+		
+		    crearBloques(2+jugador.getNivel());
+		    
+		    
+>>>>>>> f094e5f94d969ac6319a53802453df45221a4db5
 			
 		    shape = new ShapeRenderer();
-		    ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10, 5, 7, true);
+		    ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10, 5, 7, true,img);
+		  
+		
 		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
+<<<<<<< HEAD
 	//	    vidas = 3;
 	//	    puntaje = 0;    
+=======
+		    
+		   
+		     
+>>>>>>> f094e5f94d969ac6319a53802453df45221a4db5
 		}
 		public void crearBloques(int filas) {
-			
-			
 			blocks.clear();
 			int blockWidth = 70;
 		    int blockHeight = 26;
@@ -88,30 +109,42 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			batch.end();
 		}	
 		public PingBall crearpelota() {
-			PingBall pelota = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true); 
+			PingBall pelota = new PingBall(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11, 10, 5, 7, true,img); 
 			return pelota;
 		}
 		@Override
 		public void render () {
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); 		
 	        shape.begin(ShapeRenderer.ShapeType.Filled);
+	        
+	        
 	        pad.draw(shape);
-	      
-	        condiciones();
-	        
-	        bloquesUpdate();
-	        
-	        
-	        dibujaTextos();
-		}
-		
-		@Override
-		public void dispose () {
-
-		}
-		public void bloquesUpdate() {
-			
-			//dibujar bloques
+	        // monitorear inicio del juego
+	        if (ball.estaQuieto()) {
+	        	ball.setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
+	        	if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) ball.setEstaQuieto(false);
+	        }else ball.update();
+	        //verificar si se fue la bola x abajo
+	        if (ball.getY()<0) {
+	        	jugador.setVidas(jugador.getVidas()-1);
+	        	//nivel = 1;
+	        	ball = crearpelota();
+	        	
+	        }
+	        // verificar game over
+	        if (jugador.getVidas()<=0) {
+	        	jugador.setVidas(3);
+	        	jugador.setNivel(1);
+	        	crearBloques(2+jugador.getNivel());
+	        		        	
+	        }
+	        // verificar si el nivel se terminó
+	        if (blocks.size()==0) {
+	        	jugador.setNivel(jugador.getNivel()+1);
+	        	crearBloques(2+jugador.getNivel());
+	        	ball = crearpelota();
+	        }    	
+	        //dibujar bloques
 	        for (Ladrillo b : blocks) {        	
 	            b.draw(shape);
 	            try {
@@ -133,17 +166,28 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        
 	        try {
 				ball.checkCollision(pad);
-			} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+			} catch (UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (LineUnavailableException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        ball.draw(shape);
+	        batch.begin();
+	        batch.draw(img, ball.getX()+60, ball.getY());
+	        batch.end();
+	        
+	        
 	        
 	        shape.end();
-			
-		} 
-		public void condiciones(){
+	        dibujaTextos();
+		}
+		
+		@Override
+		public void dispose () {
 
+<<<<<<< HEAD
 			  // monitorear inicio del juego
 		        if (ball.estaQuieto()) {
 		        	ball.setXY(pad.getX()+pad.getWidth()/2-5, pad.getY()+pad.getHeight()+11);
@@ -172,3 +216,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			 
 		 }
 	}
+=======
+		}
+	}
+>>>>>>> f094e5f94d969ac6319a53802453df45221a4db5
