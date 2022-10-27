@@ -21,12 +21,13 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private SpriteBatch batch;	   
 	private BitmapFont font;
 	private ShapeRenderer shape;
-	private PingBall ball;
+	private PingBall ball; 
 	private Paddle pad;
 	private ArrayList<Ladrillo> blocks = new ArrayList<Ladrillo>();
-	private int vidas;
-	private int puntaje;
-	private int nivel;
+	private Jugador jugador = new Jugador(3,0,1);
+//	private int vidas;
+//	private int puntaje;
+//	private int nivel;
     
 		@Override
 		public void create () {	
@@ -35,14 +36,14 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    batch = new SpriteBatch();
 		    font = new BitmapFont();
 		    font.getData().setScale(3, 2);
-		    nivel = 1;
-		    crearBloques(2+nivel);
+		 //  nivel = 1;
+		    crearBloques(2+jugador.getNivel());
 			
 		    shape = new ShapeRenderer();
 		    ball = new PingBall(Gdx.graphics.getWidth()/2-10, 41, 10, 5, 7, true);
 		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
-		    vidas = 3;
-		    puntaje = 0;    
+	//	    vidas = 3;
+	//	    puntaje = 0;    
 		}
 		public void crearBloques(int filas) {
 			
@@ -55,11 +56,11 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    	y -= blockHeight+10;
 		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
 		    		
-		    		if (nivel==1) {
+		    		if (jugador.getNivel()==1) {
 		    			blocks.add(new LadrilloNormal(x, y, blockWidth, blockHeight));
 		    		}
 		    		
-		    		if (nivel==2) {
+		    		if (jugador.getNivel()==2) {
 		    			
 		    			if(cont%2 == 0) {
 		    				
@@ -82,8 +83,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 			batch.setProjectionMatrix(camera.combined);
 			batch.begin();
 			//dibujar textos
-			font.draw(batch, "Puntos: " + puntaje, 10, 25);
-			font.draw(batch, "Vidas : " + vidas, Gdx.graphics.getWidth()-20, 25);
+			font.draw(batch, "Puntos: " + jugador.getPuntaje(), 10, 25);
+			font.draw(batch, "Vidas : " + jugador.getVidas(), Gdx.graphics.getWidth()-20, 25);
 			batch.end();
 		}	
 		public PingBall crearpelota() {
@@ -124,7 +125,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        for (int i = 0; i < blocks.size(); i++) {
 	            Ladrillo b = blocks.get(i);
 	            if (b.destroyed) {
-	            	puntaje++;
+	            	jugador.setPuntaje(jugador.getPuntaje()+1);
 	                blocks.remove(b);
 	                i--; //para no saltarse 1 tras eliminar del arraylist
 	            }
@@ -150,21 +151,22 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		        }else ball.update();
 		        //verificar si se fue la bola x abajo
 		        if (ball.getY()<0) {
-		        	vidas--;
+		        	jugador.setVidas(jugador.getVidas()-1);
 		        	//nivel = 1;
 		        	ball = crearpelota();
 		        }
 		        // verificar game over
-		        if (vidas<=0) {
-		        	vidas = 3;
-		        	nivel = 1;
-		        	crearBloques(2+nivel);
+		        if (jugador.getVidas()<=0) {
+		        	jugador.setVidas(3);
+		        	jugador.setNivel(1);
+		        	crearBloques(2+jugador.getNivel());
+		        	
 		        		        	
 		        }
 		        // verificar si el nivel se terminó
 		        if (blocks.size()==0) {
-		        	nivel++;
-		        	crearBloques(2+nivel);
+		        	jugador.setNivel(jugador.getNivel()+1);
+		        	crearBloques(2+jugador.getNivel());
 		        	ball = crearpelota();
 		        }
 			 
