@@ -7,7 +7,7 @@ import java.util.Random;
 import com.badlogic.gdx.graphics.Color;
 
 public class LadrilloNormal extends Ladrillo {
-	int vida=1;
+	private int vida=1;
    
     public LadrilloNormal(int x, int y, int width, int height) {
 		super(x, y, width, height);

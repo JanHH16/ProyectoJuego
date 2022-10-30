@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class LadrilloDuro extends Ladrillo {
 	
-	int vida=2;
+	private int vida=2;
 	
 	public LadrilloDuro(int x, int y, int blockWidth, int blockHeight) {
 		super(x, y, blockWidth, blockHeight);

@@ -11,8 +11,8 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class SonidoLadrillo implements Sonido  {
 	
-	Clip clip;
-	URL soundURL[] = new URL[2];
+	private Clip clip;
+	private URL soundURL[] = new URL[2];
 	
 	public SonidoLadrillo() {
 		
