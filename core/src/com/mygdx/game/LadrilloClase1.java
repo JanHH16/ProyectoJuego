@@ -14,11 +14,10 @@ public class LadrilloClase1 implements ClaseLadrillo {
 	@Override
 	public MultiLadrillo clase(int x, int y, int blockHeight, int blockWidth, Random r, int Vidas) {
 		
-		director.LadrilloDosVida(b, x, y, blockHeight, blockWidth, r, y);
+		director.LadrilloDosVida(b, x, y, blockHeight, blockWidth, r, Vidas);
 		MultiLadrillo a = b.retorna_ladrillo();
 		return a;	  
 	}
-	
 	
 
 
