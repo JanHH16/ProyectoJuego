@@ -65,7 +65,7 @@ public class PingBall {
 	            SonidoPaleta a = new SonidoPaleta();
 	            a.fijarSonido();
 	          
-	            a.suenaladrillo();;
+	            a.suenaladrillo();
 	        }
 	        else{
 	            color = Color.WHITE;
@@ -78,26 +78,26 @@ public class PingBall {
 	    	return intersectaX && intersectaY;
 	    }
 	    
-	    public void checkCollision(Ladrillo block) throws UnsupportedAudioFileException, LineUnavailableException {
+	    public void checkCollision(MultiLadrillo block) throws UnsupportedAudioFileException, LineUnavailableException {
 	        if(collidesWith(block)){
 	            ySpeed = - ySpeed;
-	            block.setVida(block.getVida()-1);
+	            block.quitarVida();
 	            
-	            if (block.getVida()==0) {
+	            if (block.getVidas()==0) {
 	            	
 	            	SonidoLadrillo b = new SonidoLadrillo();
 	            	b.fijarSonido();
 	            	b.suenaladrillo();
-	            	
-	            	block.destroyed = true;
+	    
+	            	block.killLadrillo(); 
 	            }
 	           
 	        }
 	    }
-	    private boolean collidesWith(Ladrillo bb) {
+	    private boolean collidesWith(MultiLadrillo bb) {
 
-	    	boolean intersectaX = (bb.x + bb.width >= x-size) && (bb.x <= x+size);
-	        boolean intersectaY = (bb.y + bb.height >= y-size) && (bb.y <= y+size);		
+	    	boolean intersectaX = (bb.getX() + bb.getWidth() >= x-size) && (bb.getX() <= x+size);
+	        boolean intersectaY = (bb.getY() + bb.getHeight() >= y-size) && (bb.getY() <= y+size);		
 	    	return intersectaX && intersectaY;
 	    }
 	    

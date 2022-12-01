@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -9,6 +10,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,8 +25,9 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private ShapeRenderer shape;
 	private PingBall ball;
 	private Paddle pad;
-	private ArrayList<Ladrillo> blocks = new ArrayList<Ladrillo>();
+	private ArrayList<MultiLadrillo> blocks = new ArrayList<MultiLadrillo>();
 	private Player jugador = new Player(3,0,1);
+	private Random r;
     
 		@Override
 		public void create () {	
@@ -39,8 +42,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    pad = new Paddle(Gdx.graphics.getWidth()/2-50,40,100,10);
 		     
 		}
+	//	@SuppressWarnings("null")
 		public void crearBloques(int filas) {
-			
 			
 			blocks.clear();
 			int blockWidth = 70;
@@ -51,17 +54,32 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    	for (int x = 5; x < Gdx.graphics.getWidth(); x += blockWidth + 10) {
 		    		
 		    		if (jugador.getNivel()==1) {
-		    			blocks.add(new LadrilloNormal(x, y, blockWidth, blockHeight));
+		    			
+		    			LadrilloClase1 c1 = new LadrilloClase1();    			
+		    			blocks.add(c1.clase(x, y, blockHeight, blockWidth, r, y));
 		    		}
 		    		
 		    		if (jugador.getNivel()==2) {
 		    			
 		    			if(cont%2 == 0) {
 		    				
-		    				blocks.add(new LadrilloDuro(x,y,blockWidth,blockHeight));
+		    				Director director = new Director(); 
+			    			ConstructorLadrillos b = new ConstructorLadrillos();
+			    			director.LadrilloDosVida(b, x, y, blockHeight, blockWidth, r, y);
+			    			MultiLadrillo a = b.retorna_ladrillo();	    			
+			    			blocks.add(a);
+		    			
+		    				
+		    		
 		    			}else {
 		    				
-		    				blocks.add(new LadrilloNormal(x, y, blockWidth, blockHeight));
+		    				Director director = new Director(); 
+			    			ConstructorLadrillos b = new ConstructorLadrillos();
+			    			director.LadrilloUnaVida(b, x, y, blockHeight, blockWidth, r, y);
+			    			MultiLadrillo a = b.retorna_ladrillo();	    			
+			    			blocks.add(a);
+		    				
+		    		
 		    			}
 		    			
 		    		}
@@ -106,7 +124,7 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		public void bloquesUpdate() {
 			
 			//dibujar bloques
-	        for (Ladrillo b : blocks) {        	
+	        for (MultiLadrillo b : blocks) {        	
 	            b.draw(shape);
 	            try {
 					ball.checkCollision(b);
@@ -117,8 +135,8 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	        }
 	        // actualizar estado de los bloques 
 	        for (int i = 0; i < blocks.size(); i++) {
-	            Ladrillo b = blocks.get(i);
-	            if (b.destroyed) {
+	        	MultiLadrillo b = blocks.get(i);
+	            if (b.getVidas()==0) {
 	            	jugador.setPuntaje(jugador.getPuntaje()+1);
 	            	blocks.remove(b);
 	                i--; //para no saltarse 1 tras eliminar del arraylist
