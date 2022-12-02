@@ -1,16 +1,30 @@
 package com.mygdx.game;
 
-public class Player {
+public class SingletonJugador {
+	
+	private static SingletonJugador instance;
 	
 	private int vidas;
 	private int puntaje;
 	private int nivel;
 	
-	public Player(int vidas, int puntaje, int nivel) {
-		super();
+	
+	private SingletonJugador(int vidas, int puntaje, int nivel) {
+		
 		this.vidas = vidas;
 		this.puntaje = puntaje;
 		this.nivel = nivel;
+	}
+	
+	public static SingletonJugador getinstancia(int vidas, int puntaje, int nivel) {
+		
+		if (instance == null) {
+			
+			instance = new SingletonJugador(vidas,puntaje,nivel);
+		}
+		
+		return instance; 
+		
 	}
 
 	public int getVidas() {
@@ -37,6 +51,4 @@ public class Player {
 		this.nivel = nivel;
 	}
 	
-	
-
 }

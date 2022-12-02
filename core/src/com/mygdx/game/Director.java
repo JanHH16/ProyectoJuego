@@ -17,7 +17,7 @@ public class Director {
 		r = new Random(x+y);
 		ladrillo.set_r(r);
 		ladrillo.set_cc(new Color(0.1f+r.nextFloat(1), r.nextFloat(1), r.nextFloat(1), 10));
-		ladrillo.setVidas(1);
+		ladrillo.setVidas(vidas);
 		
 		return ladrillo.retorna_ladrillo(); 
 	
@@ -34,7 +34,7 @@ public class Director {
 		r = new Random(x+y);
 		ladrillo.set_r(r);
 		ladrillo.set_cc(new Color(0.1f+r.nextFloat(1), r.nextFloat(1), r.nextFloat(1), 10));
-		ladrillo.setVidas(1);
+		ladrillo.setVidas(vidas);
 		
 		return ladrillo.retorna_ladrillo(); 
 	

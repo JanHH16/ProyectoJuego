@@ -26,9 +26,9 @@ public class BlockBreakerGame extends ApplicationAdapter {
 	private PingBall ball;
 	private Paddle pad;
 	private ArrayList<MultiLadrillo> blocks = new ArrayList<MultiLadrillo>();
-	private Player jugador = new Player(3,0,1);
 	private Random r;
-    
+	SingletonJugador jugador=SingletonJugador.getinstancia(3,0,1);
+	
 		@Override
 		public void create () {	
 			camera = new OrthographicCamera();
@@ -56,28 +56,22 @@ public class BlockBreakerGame extends ApplicationAdapter {
 		    		if (jugador.getNivel()==1) {
 		    			
 		    			LadrilloClase1 c1 = new LadrilloClase1();    			
-		    			blocks.add(c1.clase(x, y, blockHeight, blockWidth, r, y));
+		    			blocks.add(c1.clase(x, y, blockHeight, blockWidth, r, 1));
 		    		}
 		    		
 		    		if (jugador.getNivel()==2) {
 		    			
 		    			if(cont%2 == 0) {
 		    				
-		    				Director director = new Director(); 
-			    			ConstructorLadrillos b = new ConstructorLadrillos();
-			    			director.LadrilloDosVida(b, x, y, blockHeight, blockWidth, r, y);
-			    			MultiLadrillo a = b.retorna_ladrillo();	    			
-			    			blocks.add(a);
+		    				LadrilloClase2 c2 = new LadrilloClase2();    			
+			    			blocks.add(c2.clase(x, y, blockHeight, blockWidth, r, 2));
 		    			
 		    				
 		    		
 		    			}else {
 		    				
-		    				Director director = new Director(); 
-			    			ConstructorLadrillos b = new ConstructorLadrillos();
-			    			director.LadrilloUnaVida(b, x, y, blockHeight, blockWidth, r, y);
-			    			MultiLadrillo a = b.retorna_ladrillo();	    			
-			    			blocks.add(a);
+		    				LadrilloClase1 c1 = new LadrilloClase1();    			
+			    			blocks.add(c1.clase(x, y, blockHeight, blockWidth, r, 1));
 		    				
 		    		
 		    			}
