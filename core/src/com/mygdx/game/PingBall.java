@@ -63,7 +63,7 @@ public class PingBall {
 	            color = Color.GREEN;
 	            ySpeed = -ySpeed;
 	            SonidoPaleta a = new SonidoPaleta();
-	            a.fijarSonido();
+	            a.elegirSonido();
 	          
 	            a.suenaladrillo();
 	        }
@@ -86,7 +86,7 @@ public class PingBall {
 	            if (block.getVidas()==0) {
 	            	
 	            	SonidoLadrillo b = new SonidoLadrillo();
-	            	b.fijarSonido();
+	            	b.elegirSonido();
 	            	b.suenaladrillo();
 	    
 	            	block.killLadrillo(); 

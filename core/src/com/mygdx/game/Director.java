@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.Color;
 
 public class Director {
 	
+	public Director() {};
+	
 	public  MultiLadrillo LadrilloUnaVida(ConstructorLadrillos ladrillo, int x, int y,int blockHeight, int blockWidth, Random r,int vidas){
 		
 				

@@ -8,6 +8,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public interface Sonido {
 	
 	void suenaladrillo();
-	void fijarSonido() throws UnsupportedAudioFileException, LineUnavailableException;
+	void elegirSonido() throws UnsupportedAudioFileException, LineUnavailableException;
 
 }

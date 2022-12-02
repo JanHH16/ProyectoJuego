@@ -28,7 +28,7 @@ public class SonidoLadrillo implements Sonido  {
 
 
 	@Override
-	public void fijarSonido() throws UnsupportedAudioFileException, LineUnavailableException {
+	public void elegirSonido() throws UnsupportedAudioFileException, LineUnavailableException {
 		try {
 			AudioInputStream m = AudioSystem.getAudioInputStream(soundURL[0]);
 			this.clip = AudioSystem.getClip();
